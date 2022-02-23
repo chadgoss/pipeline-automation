@@ -28,4 +28,4 @@ jobs:
         echo ${{inputs.pick_deploy_environment}}
 
     - id: return_results
-      run: echo "::set-output name=bundle_runner_result::pass"
+      run: echo "::set-output name=bundle_runner_result::passing"
