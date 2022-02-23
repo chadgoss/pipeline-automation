@@ -1,0 +1,31 @@
+# bundle workflow
+
+name: bundle-workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_call:
+    inputs:
+      pick_deploy_environment:
+        required: true
+        type: string
+    outputs:
+      bundle_runner_result:
+        description: "bundle runner result"
+        value: ${{ jobs.display_inputs.outputs.bundle_runner_result }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  display_inputs:
+    runs-on: [ubuntu-latest]
+    outputs:
+      bundle_runner_result: ${{ steps.return_results.outputs.bundle_runner_result }}
+
+    steps:
+    - id: display_inputs
+      run: |
+        echo ${{inputs.pick_deploy_environment}}
+
+    - id: return_results
+      run: echo "::set-output name=bundle_runner_result::pass"
