@@ -31,6 +31,7 @@ jobs:
     - id: checkout_repo
       uses: actions/checkout@v2
       with:
+        fetch-depth: 2
         clean: 'true'
         persist-credentials: 'false'
 
