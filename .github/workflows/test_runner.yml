@@ -31,7 +31,6 @@ jobs:
           echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA)" >> $GITHUB_ENV
 
       - name: Test
-        if: $GITHUB_SHA_SHORT
         run: |
           echo $GITHUB_SHA_SHORT
           echo $TEARDOWN
