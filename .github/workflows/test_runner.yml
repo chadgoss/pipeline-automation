@@ -22,11 +22,13 @@ on:
 jobs:
   DummyJob:
     runs-on: [ ubuntu-latest ]
-    steps:
-      - name checkout
+      steps:
+      - name: Checkout repository
         uses: actions/checkout@v2
-        with: 
-          fetch-depth: 2
+        with:
+          submodules: 'true'
+          clean: 'true'
+          persist-credentials: 'false'
 
       - name: Set env
         run: |
