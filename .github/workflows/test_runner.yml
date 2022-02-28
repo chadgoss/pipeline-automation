@@ -28,11 +28,11 @@ jobs:
           echo "TEARDOWN=$(git diff-tree --no-commit-id --name-statusgit diff-tree --no-commit-id --name-status -r -r ${{ github.sha }} |cut -c1-1)">>$GITHUB_ENV
 
       - id: conditional_add
-        if: $GITHUB_ENV == 'A'
+        if: env.TEARDOWN == 'A'
         run: echo "Added file"
 
 
       - id: conditional_delete
-        if: $GITHUB_ENV == 'D'
+        if: env.TEARDOWN == 'D'
         run: echo "Deleted file"
 
