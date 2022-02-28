@@ -37,6 +37,8 @@ jobs:
         run: 
           echo $TEARDOWN
           echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r ${{ github.sha }})"
+          echo "$(git diff-tree --no-commit-id --name-status -r ${{ github.sha }} |cut -c1-1)"
+          echo "$(git diff-tree --no-commit-id --name-status -r ${{ github.sha }})"
 
       - id: conditional_add
         if: env.TEARDOWN == 'A'
