@@ -33,4 +33,8 @@ jobs:
         echo ${{inputs.pick_deploy_environment}}
 
     - id: return_results
-      run: echo "::set-output name=bundle_runner_result::passing"
+      run: |
+        echo "::set-output name=bundle_runner_result::passing"
+        echo "$(git diff-tree --no-commit-id --name-status -r ${{ github.sha }} |cut -c1-1)"
+
+
