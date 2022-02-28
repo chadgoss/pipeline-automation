@@ -1,0 +1,33 @@
+# test runner workflow
+
+name: test-runner-workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'module to run tests on'
+        required: true
+
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  DummyJob:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - id: setup
+        run: |
+          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-statusgit diff-tree --no-commit-id --name-status -r -r ${{ github.sha }} |cut -c1-1)">>$GITHUB_ENV
+
+      - id: conditional_run
+        if: $GITHUB_ENV == 'A'
+        run: echo "Added file"
+
+
+      - id: conditional_run
+        if: $GITHUB_ENV == 'D'
+        run: echo "Deleted file"
+
