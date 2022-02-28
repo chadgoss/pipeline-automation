@@ -1,10 +1,15 @@
 # bundle workflow
 
-name: bundle-workflow
+name: bundle-runner-workflow
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'terraform/dev/**_bundle.tf'
+
   workflow_call:
     inputs:
       pick_deploy_environment:
