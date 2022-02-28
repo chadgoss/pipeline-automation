@@ -23,6 +23,12 @@ jobs:
   DummyJob:
     runs-on: [ ubuntu-latest ]
     steps:
+      - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        clean: 'true'
+        persist-credentials: 'false'
+
       - id: setup
         run: |
           echo "TEARDOWN=$(git diff-tree --no-commit-id --name-statusgit diff-tree --no-commit-id --name-status -r -r ${{ github.sha }} |cut -c1-1)">>$GITHUB_ENV
