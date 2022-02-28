@@ -6,6 +6,7 @@ name: test-runner-workflow
 # or API.
 on:
   workflow_run:
+    workflows:
       - bundle-runner-workflow
     types:
       - completed
