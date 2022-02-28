@@ -29,6 +29,7 @@ jobs:
           submodules: 'true'
           clean: 'true'
           persist-credentials: 'false'
+          fetch-depth: 2
 
       - name: Set env
         run: |
