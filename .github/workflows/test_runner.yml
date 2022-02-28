@@ -33,6 +33,11 @@ jobs:
         run: |
           echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r -r ${{ github.sha }} |cut -c1-1)">>$GITHUB_ENV
 
+      - id: display
+        run: 
+          echo $TEARDOWN
+          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r -r ${{ github.sha }})"
+
       - id: conditional_add
         if: env.TEARDOWN == 'A'
         run: echo "Added file"
