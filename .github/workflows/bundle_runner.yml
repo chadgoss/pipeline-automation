@@ -28,11 +28,11 @@ jobs:
       bundle_runner_result: ${{ steps.return_results.outputs.bundle_runner_result }}
 
     steps:
-      - id: checkout_repo
-        uses: actions/checkout@v2
-        with:
-          clean: 'true'
-          persist-credentials: 'false'
+    - id: checkout_repo
+      uses: actions/checkout@v2
+      with:
+        clean: 'true'
+        persist-credentials: 'false'
 
     - id: display_inputs
       run: |
