@@ -23,11 +23,15 @@ jobs:
   DummyJob:
     runs-on: [ ubuntu-latest ]
     steps:
-      - id: checkout_repo
-        uses: actions/checkout@v2
-        with:
-          clean: 'true'
-          persist-credentials: 'false'
+      - uses: actions/checkout@v2
+
+      - name: Set env
+        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+
+      - name: Test
+        run: |
+          echo $GITHUB_SHA_SHORT
+          env.GITHUB_SHA_SHORT
 
       - id: display
         run: 
