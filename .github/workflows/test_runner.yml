@@ -33,7 +33,7 @@ jobs:
 
       - name: setup
         run: |
-          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-2)" >> $GITHUB_ENV
+          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1)" >> $GITHUB_ENV
 
       - name: display
         run: |
