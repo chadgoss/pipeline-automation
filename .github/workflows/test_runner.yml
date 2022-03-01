@@ -31,10 +31,10 @@ jobs:
 
     - id: conditional_run
       run: |
-        if [[$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1) == 'D' || github.event_name == 'workflow_dispatch']]; then
-          echo "::set-output name=action::Teardown"
-        else
+        if [[$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1) == 'D']]; then
           echo "::set-output name=action::DoNotTeardown"
+        else
+          echo "::set-output name=action::Teardown"
         fi
 
   teardown:
