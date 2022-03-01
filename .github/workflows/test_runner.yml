@@ -41,10 +41,10 @@ jobs:
 
       - id: conditional_add
         if: env.TEARDOWN == 'A'
-        run: echo "Added file: $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA}}"
+        run: echo "Added file: $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
 
 
       - id: conditional_delete
         if: env.TEARDOWN == 'D'
-        run: echo "Deleted file: $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA}}"
+        run: echo "Deleted file: $(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)
 
