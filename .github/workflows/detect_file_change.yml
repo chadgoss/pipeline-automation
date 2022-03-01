@@ -20,8 +20,23 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  conditional_run:
+    runs-on: [ ubuntu-latest ]
+    outputs:
+      action: ${{ steps.conditional_run.outputs.action }}
+    steps:
+    - id: conditional_run
+      uses: actions/checkout@v2
+      with:
+        fetch_depth: 2
+      run: |
+        echo "::set-output name=action::$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1)"
+
+
   DummyJob:
     runs-on: [ ubuntu-latest ]
+    needs: conditional_run
+    if: needs.conditional_run.outputs.action == 'D'
     steps:
       - name: checkout
         uses: actions/checkout@v2
