@@ -17,11 +17,30 @@ on:
         required: true
 
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  DummyJob:
+  conditional_run:
     runs-on: [ ubuntu-latest ]
+    outputs:
+      action: ${{ steps.conditional_run.outputs.action }}
+    steps:
+    - id: checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+
+    - id: conditional_run
+      run: |
+        if [[$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1)=='D' or github.event_name == 'workflow_dispatch']]; then
+          echo "::set-output name=action::Teardown"
+        else
+          echo "::set-output name=action::DoNotTeardown"
+        fi
+
+  teardown:
+    runs-on: [ ubuntu-latest ]
+    needs: conditional_run
+    if: needs.conditional_run.outputs.action == 'Teardown'
     steps:
       - name: checkout
         uses: actions/checkout@v2
