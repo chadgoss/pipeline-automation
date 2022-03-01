@@ -33,7 +33,7 @@ jobs:
 
       - name: setup
         run: |
-          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-6)" >> $GITHUB_ENV
+          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-2)" >> $GITHUB_ENV
 
       - name: display
         run: |
@@ -43,8 +43,10 @@ jobs:
         if: env.TEARDOWN == 'A'
         run: echo "Added file:$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
 
-
       - id: conditional_delete
         if: env.TEARDOWN == 'D'
         run: echo "Deleted file:$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
 
+      - id: conditional_modify
+        if: env.TEARDOWN == 'M'
+        run: echo "Modified file:$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
