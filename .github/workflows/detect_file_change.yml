@@ -1,0 +1,52 @@
+# detect file change runner workflow
+
+name: detect_file_change
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_run:
+    workflows:
+      - bundle-runner-workflow
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'module to run tests on'
+        required: true
+
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  DummyJob:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+          clean: 'true'
+          persist-credentials: 'false'
+          fetch-depth: 2
+
+      - name: setup
+        run: |
+          echo "TEARDOWN=$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1)" >> $GITHUB_ENV
+
+      - name: display
+        run: |
+          echo $TEARDOWN
+
+      - id: conditional_add
+        if: env.TEARDOWN == 'A'
+        run: echo "Added file:$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
+
+      - id: conditional_delete
+        if: env.TEARDOWN == 'D'
+        run: echo "Deleted file:$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
+
+      - id: conditional_modify
+        if: env.TEARDOWN == 'M'
+        run: echo "Modified file:$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA)"
