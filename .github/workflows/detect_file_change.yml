@@ -25,10 +25,11 @@ jobs:
     outputs:
       action: ${{ steps.conditional_run.outputs.action }}
     steps:
-    - id: conditional_run
+    - id: checkout
       uses: actions/checkout@v2
       with:
         fetch_depth: 2
+    - id: conditional_run
       run: |
         echo "::set-output name=action::$(git diff-tree --no-commit-id --name-status -r $GITHUB_SHA| cut -c 1-1)"
 
