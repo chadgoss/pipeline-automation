@@ -28,7 +28,7 @@ jobs:
     - id: checkout
       uses: actions/checkout@v2
       with:
-        fetch_depth: 2
+        fetch-depth: 2
 
     - id: conditional_run
       run: |
