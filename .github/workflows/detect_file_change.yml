@@ -74,4 +74,4 @@ jobs:
     steps:
       - name: display
         run: |
-          echo needs.conditional_run.outputs.action
+          echo ${{needs.conditional_run.outputs.action}}
