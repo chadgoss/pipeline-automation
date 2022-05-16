@@ -1,0 +1,14 @@
+on: 
+  repository_dispatch
+
+name: metrics_lambda 
+
+jobs:
+  clean_workspace:
+    runs-on: [ubuntu-latest]
+
+    steps:
+    - name: Clean workspace
+      run: |
+        echo "Cleaning up run"
+
