@@ -1,5 +1,6 @@
 on: 
-  repository_dispatch
+  repository_dispatch:
+    types: [build_metrics_lambda]
 
 name: metrics_lambda 
 
