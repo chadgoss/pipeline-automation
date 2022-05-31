@@ -1,15 +1,29 @@
 on: 
-  repository_dispatch:
-    types: [build_metrics_lambda]
+  workflow_dispatch:
+    inputs:
+      deploy_account:
+        description: 'AWS S3 to push lambda to, dev or prod.'
+        default: 'dev'
+        required: true
 
-name: metrics_lambda 
+name: metrics_lambda_builder
 
 jobs:
   clean_workspace:
-    runs-on: [ubuntu-latest]
+    runs-on: ${{ github.event.inputs.pick_deploy_environment }}
 
     steps:
     - name: Clean workspace
       run: |
         echo "Cleaning up run"
+        rm -rf "${{ github.workspace }}" 
 
+  deploy:
+    name: Deploy
+    needs: clean_workspace
+    runs-on: ${{ github.event.inputs.pick_deploy_environment }}
+    
+    steps:
+    - name: display
+      run: |
+        ls -la
