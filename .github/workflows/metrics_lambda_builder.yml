@@ -1,4 +1,4 @@
-on: 
+on:
   workflow_dispatch:
     inputs:
       deploy_account:
@@ -14,7 +14,7 @@ name: metrics_lambda_builder
 
 jobs:
   set_deploy_env:
-    runs-on: [ ubuntu-latest ]
+    runs-on: [dev]
     outputs:
       runner: ${{ steps.set_deploy_env.outputs.runner }}
 
@@ -28,7 +28,17 @@ jobs:
     runs-on: ${{needs.set_deploy_env.outputs.runner}}
 
     steps:
+    - name: Clean workspace
+      run: |
+        echo "Cleaning up run"
+        rm -rf "${{ github.workspace }}"
 
+  deploy:
+    name: Deploy
+    needs: [set_deploy_env, clean_workspace]
+    runs-on: ${{needs.set_deploy_env.outputs.runner}}
+
+    steps:
     - name: display
       run: |
         ls -la
