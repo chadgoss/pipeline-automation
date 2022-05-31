@@ -14,7 +14,7 @@ name: metrics_lambda_builder
 
 jobs:
   set_deploy_env:
-    runs-on: [dev]
+    runs-on: [ubuntu-latest]
     outputs:
       runner: ${{ steps.set_deploy_env.outputs.runner }}
 
