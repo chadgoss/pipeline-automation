@@ -22,7 +22,7 @@ jobs:
     - id: set_deploy_env
       run: |
 
-        if [[ "${{ github.event.inputs.pick_deploy_environment }}" == prod ]]; then
+        if [[ "${{ github.event.inputs.deploy_account }}" == prod ]]; then
           echo "::set-output name=runner::prod"
         else
           echo "::set-output name=runner::dev"
