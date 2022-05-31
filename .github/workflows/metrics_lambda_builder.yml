@@ -21,13 +21,7 @@ jobs:
     steps:
     - id: set_deploy_env
       run: |
-
-        if [[ "${{ github.event.inputs.deploy_account }}" == prod ]]; then
-          echo "::set-output name=runner::prod"
-        else
-          echo "::set-output name=runner::dev"
-        fi
-        echo "Selected runner:${{steps.set_deploy_env.outputs.runner}}"
+        echo "::set-output name=runner::${{ github.event.inputs.deploy_account }}"
 
   clean_workspace:
     needs: set_deploy_env
