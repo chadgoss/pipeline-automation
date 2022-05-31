@@ -3,8 +3,12 @@ on:
     inputs:
       deploy_account:
         description: 'AWS S3 to push lambda to, dev or prod.'
-        default: 'dev'
         required: true
+        type: choice
+        options:
+        - dev
+        - prod
+        - ubuntu-latest
 
 name: metrics_lambda_builder
 
