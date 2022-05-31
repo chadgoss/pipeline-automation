@@ -9,21 +9,28 @@ on:
 name: metrics_lambda_builder
 
 jobs:
-  clean_workspace:
-    runs-on: ${{ github.event.inputs.pick_deploy_environment }}
+  set_deploy_env:
+    runs-on: [ ubuntu-latest ]
+    outputs:
+      runner: ${{ steps.set_deploy_env.outputs.runner }}
 
     steps:
-    - name: Clean workspace
+    - id: set_deploy_env
       run: |
-        echo "Cleaning up run"
-        rm -rf "${{ github.workspace }}" 
 
-  deploy:
-    name: Deploy
-    needs: clean_workspace
-    runs-on: ${{ github.event.inputs.pick_deploy_environment }}
-    
+        if [[ "${{ github.event.inputs.pick_deploy_environment }}" == prod ]]; then
+          echo "::set-output name=runner::prod"
+        else
+          echo "::set-output name=runner::dev"
+        fi
+        echo "Selected runner:${{steps.set_deploy_env.outputs.runner}}"
+
+  clean_workspace:
+    needs: set_deploy_env
+    runs-on: ${{needs.set_deploy_env.outputs.runner}}
+
     steps:
+
     - name: display
       run: |
         ls -la
